@@ -26,14 +26,12 @@ public class ProductService {
     return new ProductsListDto(pageNumber, pageSize, getProducts(pageNumber, pageSize));
   }
 
-  @Transactional
   public List<ProductDto> getProducts(Integer pageNumber, Integer pageSize) {
     List<ProductDto> productDtoList = new ArrayList<>();
     productRepository.findAll(PageRequest.of(pageNumber, pageSize)).forEach(productDao -> productDtoList.add(productDao.mapToProductDto()));
     return productDtoList;
   }
 
-  @Transactional
   public ProductDto getProduct(Integer productId) {
     ProductDao productDao = productRepository.findById(productId).orElseThrow(
         () -> new ReadableException(ErrorType.PRODUCT_NOT_FOUND));
